@@ -9,27 +9,26 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# TODO: Generate Prisma Client
+# Generate Prisma Client
 RUN npx prisma generate
 
 # Build application
 RUN npm run build
 
-# TODO: Production stage
+# Production stage
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# TODO: Copy built assets and necessary files
+# Copy built assets and necessary files
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# TODO: SET ENV variables
 ENV NODE_ENV=production
 
-# TODO: install production dependencies
+# install production dependencies
 RUN npm install --only=production
 
 # Expose the port

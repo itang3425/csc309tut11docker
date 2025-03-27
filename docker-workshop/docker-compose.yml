@@ -22,7 +22,7 @@ services:
       - quiz-network
 
   app:
-    build:
+    build: 
       context: .
       dockerfile: Dockerfile
     container_name: quiz-app
